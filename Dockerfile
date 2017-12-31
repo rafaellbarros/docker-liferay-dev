@@ -1,5 +1,6 @@
-FROM ubuntu
-MAINTAINER rafaelbarros.df@gmail.com
+FROM osixia/ubuntu-light-baseimage
+#FROM ubuntu
+MAINTAINER Rafael Barros <rafaelbarros.df@gmail.com>
 
 # install java oracle 7
 RUN apt-get update && \
@@ -13,11 +14,6 @@ RUN echo "oracle-java7-installer shared/accepted-oracle-license-v1-1 select true
 
 RUN apt-get install -y oracle-java7-installer
 
-# set variables path
-ENV JAVA_HOME=/usr/lib/jvm/java-7-oracle
-ENV JRE_HOME=$JAVA_HOME/jre
-ENV PATH=$PATH:$JAVA_HOME/bin
-
 RUN rm -rf /var/cache/oracle-jdk7-installer/*
 
 # install liferay 6 ce
@@ -29,3 +25,19 @@ RUN rm liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip
 
 RUN ln -s /opt/liferay-portal-6.2-ce-ga6 /opt/liferay-portal
 RUN ln -s /opt/liferay-portal/tomcat-7.0.62 /opt/liferay-portal/tomcat
+
+# Add configuration files
+COPY resources/portal-ext.properties /opt/liferay-portal/portal-ext.properties
+COPY resources/portal-setup-wizard.properties /opt/liferay-portal/portal-setup-wizard.properties
+COPY resources/setenv.sh /opt/liferay-portal/tomcat/bin/setenv.sh
+
+VOLUME /opt/liferay-portal/data
+
+# Expose port 8080 443
+EXPOSE 8080 
+
+# Set enviroment
+ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
+
+WORKDIR /opt/liferay-portal/tomcat
+CMD ["bin/catalina.sh","run"]
