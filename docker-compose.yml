@@ -10,16 +10,16 @@ services:
       MYSQL_DATABASE: lportal_mysql
       MYSQL_USER: lportal
       MYSQL_PASSWORD: lportal      
-  web:                     
-    depends_on:
-      - mysql
-    links:
-      - mysql
-    image: rafaelbarros/liferay_dev:v2
+  web:
+    image: rafaelbarros/liferay_dev
     volumes:             
       - "./tmp/deploy:/opt/liferay-portal/deploy" 
       - "./volumes/liferaydata:/opt/liferay-portal/data"
-      - "./volumes/logs:/opt/liferay-portal/tomcat/logs"                             
+      - "./volumes/logs:/opt/liferay-portal/tomcat/logs"                                      
+    depends_on:
+      - mysql
+    links:
+      - mysql                              
     ports:
       - "8000:8080"   
     restart: always      
