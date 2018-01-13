@@ -1,22 +1,21 @@
 FROM osixia/ubuntu-light-baseimage
-#FROM ubuntu
-MAINTAINER Rafael Barros <rafaelbarros.df@gmail.com>
 
-# install java oracle 7
+LABEL author="Rafael Barros" maintainer="rafaelbarros.df@gmail.com"
+
+# Install java oracle 7u80
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:webupd8team/java && \
-    apt-get update && apt-get install -y unzip && apt-get clean
+    apt-get update && apt-get install -y unzip && \
+    apt-get clean
 
 COPY lib/jdk-7u80-linux-x64.tar.gz /var/cache/oracle-jdk7-installer/jdk-7u80-linux-x64.tar.gz
 
-RUN echo "oracle-java7-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections
+RUN echo "oracle-java7-installer shared/accepted-oracle-license-v1-1 select true" | debconf-set-selections && \
+    apt-get install -y oracle-java7-installer && \
+    rm -rf /var/cache/oracle-jdk7-installer/*
 
-RUN apt-get install -y oracle-java7-installer
-
-RUN rm -rf /var/cache/oracle-jdk7-installer/*
-
-# install liferay 6 ce
+# Install liferay 6.2-ce-ga6
 RUN apt-get install -y curl
 
 RUN curl -OL http://sourceforge.net/projects/lportal/files/Liferay%20Portal/6.2.5%20GA6/liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip
@@ -33,11 +32,12 @@ COPY resources/setenv.sh /opt/liferay-portal/tomcat/bin/setenv.sh
 
 VOLUME /opt/liferay-portal/data
 
-# Expose port 8080 443
+# Expose port 8080
 EXPOSE 8080 
 
 # Set enviroment
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 
+# Run tomcat
 WORKDIR /opt/liferay-portal/tomcat
 CMD ["bin/catalina.sh","run"]
