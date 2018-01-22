@@ -1,25 +1,11 @@
 version: '2'
 services:
-  mysql:
-    image: mysql:5.7
+  portal:
+    build: ./hsql/
     volumes:
-      - "./volumes/mysqldata:/var/lib/mysql"
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: lportal_mysql
-      MYSQL_USER: lportal
-      MYSQL_PASSWORD: lportal      
-  web:
-    image: rafaelbarros/liferay_dev
-    volumes:             
-      - "./tmp/deploy:/opt/liferay-portal/deploy" 
+      - "./tmp/deploy:/opt/liferay-portal/deploy"
       - "./volumes/liferaydata:/opt/liferay-portal/data"
-      - "./volumes/logs:/opt/liferay-portal/tomcat/logs"                                      
-    depends_on:
-      - mysql
-    links:
-      - mysql                              
+      - "./volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
     ports:
-      - "8080:8080"   
-    restart: always      
+      - "8080:8080"
+    restart: always
