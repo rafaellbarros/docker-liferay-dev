@@ -13,10 +13,5 @@ volumes/logs/*.log
 volumes/logs/*.txt
 volumes/mysqldata/*
 !volumes/mysqldata/.keep
-
-
-
-
-
-
-
+volumes/postgresdata/*
+!volumes/postgresdata/.keep
