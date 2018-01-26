@@ -7,11 +7,11 @@ sdk/liferay-plugins-sdk-6.2/ext/*/*
 sdk/liferay-plugins-sdk-6.2/layouttpl/*/*
 sdk/liferay-plugins-sdk-6.2/themes/*/*
 
-volumes/liferaydata/*/*
-volumes/logs/!.keep
-volumes/logs/*.log
-volumes/logs/*.txt
-volumes/mysqldata/*
-!volumes/mysqldata/.keep
-volumes/postgresdata/*
-!volumes/postgresdata/.keep
+hsql/volumes/*
+
+mysql/volumes/*
+
+postgres/volumes/*
+
+
+
