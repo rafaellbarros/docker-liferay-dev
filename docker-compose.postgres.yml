@@ -3,22 +3,25 @@ services:
   postgres:
     image: postgres:9.5
     volumes:
-      - "./volumes/postgresdata:/var/lib/postgresql/data"   
+      - "./postgres/volumes/postgresdata:/var/lib/postgresql/data"   
     environment:
-      - POSTGRES_PASSWORD=lportal
-      - POSTGRES_USER=lportal
-      - POSTGRES_DB=lportal_postgres
+      POSTGRES_PASSWORD: lportal
+      POSTGRES_USER: lportal
+      POSTGRES_DB: lportal_postgres
+    container_name: liferay_db_postgres      
     restart: always  
-  portal:
+  portal_postgres:
     build: ./postgres/
+    image: rafaelbarros/liferay-6.2-dev-postgres
     volumes:
       - "./tmp/deploy:/opt/liferay-portal/deploy"
-      - "./volumes/liferaydata:/opt/liferay-portal/data"
-      - "./volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
+      - "./postgres/volumes/liferaydata:/opt/liferay-portal/data"
+      - "./postgres/volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
     depends_on:
       - postgres
     links:
       - postgres
     ports:
       - "8282:8080"
+    container_name: liferay_web_postgres  
     restart: always
