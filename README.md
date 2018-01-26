@@ -12,8 +12,7 @@ docker-compose up -d .
 
 ```
 
-Access :point_right:
-<a href="http://localhost:8080" target="_blank">localhost:8080</a>
+Access :point_right: [localhost:8080](http://localhost:8080 target="_blank")
 
 ## Liferay with Postgres
 ```
