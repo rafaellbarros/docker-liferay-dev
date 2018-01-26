@@ -1,11 +1,13 @@
 version: '2'
 services:
-  portal:
+  portal_hsql:
     build: ./hsql/
+    image: rafaelbarros/liferay-6.2-dev-hsql
     volumes:
       - "./tmp/deploy:/opt/liferay-portal/deploy"
-      - "./volumes/liferaydata:/opt/liferay-portal/data"
-      - "./volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
+      - "./hsql/volumes/liferaydata:/opt/liferay-portal/data"
+      - "./hsql/volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
     ports:
       - "8080:8080"
+    container_name: liferay_web_hsql  
     restart: always
