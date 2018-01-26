@@ -1,0 +1,24 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.5
+    volumes:
+      - "./volumes/postgresdata:/var/lib/postgresql/data"   
+    environment:
+      - POSTGRES_PASSWORD=lportal
+      - POSTGRES_USER=lportal
+      - POSTGRES_DB=lportal_postgres
+    restart: always  
+  portal:
+    build: ./postgres/
+    volumes:
+      - "./tmp/deploy:/opt/liferay-portal/deploy"
+      - "./volumes/liferaydata:/opt/liferay-portal/data"
+      - "./volumes/logs:/opt/liferay-portal/tomcat-7.0.62/logs"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "8282:8080"
+    restart: always
