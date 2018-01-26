@@ -12,23 +12,23 @@ docker-compose up -d .
 
 ```
 
-Access :point_right: [localhost:8080](http://localhost:8080 target="_blank")
+Access :point_right: [localhost:8080](http://localhost:8080)
 
 ## Liferay with Postgres
 ```
 docker-compose -f docker-compose.postgres.yml up -d
 ```
 
-Access :point_right:
-<a href="http://localhost:8282" target="_blank">localhost:8282</a>
+Access :point_right: [localhost:8282](http://localhost:8282)
+
 
 ## Liferay with Mysql
 ```
 docker-compose -f docker-compose.mysql.yml up -d
 ```
 
-Access :point_right:
-<a href="http://localhost:8181" target="_blank">localhost:8181</a>
+Access :point_right: [localhost:8181](http://localhost:8181)
+
 
 ## Using sdk your ide environment
 
